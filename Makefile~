@@ -1,0 +1,38 @@
+MapADT.class: MapADT.java
+	javac MapADT.java
+
+HashtableMap.class: MapADT.class HashtableMap.java
+	javac HashtableMap.java
+
+BaseGraph.class: MapADT.class BaseGraph.java
+	javac BaseGraph.java
+
+GraphADT.class: GraphADT.java
+	javac GraphADT.java
+
+DijkstraGraph.class: HashtableMap.class BaseGraph.class GraphADT.class DijkstraGraph.java
+	javac DijkstraGraph.java
+
+FrontendInterface.class: FrontendInterface.java
+	javac FrontendInterface.class
+
+Backend.class: GraphADT.class Backend.java
+	javac Backend.java
+
+Frontend.class: FrontendInterface.class Backend.class
+	javac FrontendInterface.java
+
+FrontendTests.class: FrontendTests.java Frontend.class Backend.class DijkstraGraph.class
+	javac -cp ../junit5.jar:. FrontendTests.java
+
+startServer: WebApp.class
+	javac -cp .:../junit5.jar WebApp
+
+runAllTests: FrontendTests.class
+	java -cp ../junit5.jar -cp . -c FrontendTests
+
+WebApp.class:
+	javac -cp ../junit5.jar:. WebApp.java
+
+clean:
+	rm -rf *.class
